@@ -46,7 +46,7 @@
     color: white;
 }
 
-.btn-primary.download {
+.btn-primary#download {
     display: block;
     margin: 0 auto;
     margin-top: 1em;

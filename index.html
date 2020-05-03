@@ -1,81 +1,78 @@
 <!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Video Grabber</title>
+  <head>
+    <meta charset="utf-8">
+    <title>Video Grabber</title>
 
-  <link href="./styles/videojs.record.css" rel="stylesheet">
-  <link href="./styles/video-js.css" rel="stylesheet">
-  <link href="./styles/index.css" rel="stylesheet">
+    <link href="./styles/videojs.record.css" rel="stylesheet">
+    <link href="./styles/video-js.css" rel="stylesheet">
+    <link href="./styles/index.css" rel="stylesheet">
 
-  <script src="./lib/video.js"></script>
-  <script src="./lib/RecordRTC.js"></script>
-  <script src="./lib/webrtc.js"></script>
-  <script src="./lib/moment.min.js"></script>
-  <script src="./lib/videojs.record.js"></script>
+    <script src="./lib/video.js"></script>
+    <script src="./lib/RecordRTC.js"></script>
+    <script src="./lib/webrtc.js"></script>
+    <script src="./lib/moment.min.js"></script>
+    <script src="./lib/videojs.record.js"></script>
 
-</head>
-<body>
+  </head>
+  <body>
 
-  <div class="main">
-    <div class="card card-video-player">
-      <video id="portfolioVideo" playsinline class="video-js vjs-default-skin"></video>
+    <div class="main">
+      <div class="card card-video-player">
+        <video id="portfolioVideo" playsinline class="video-js vjs-default-skin"></video>
+      </div>
+      <button class="btn btn-primary" id="download">Download</button>
     </div>
-  <button class="btn btn-primary download">Download</button>
-</div>
 
-<script>
-var videoMaxLengthInSeconds = 120;
+    <script>
+      var videoMaxLengthInSeconds = 120;
 
-var options = {
-    controls: true,
-    width: 800,
-    height: 450,
-    fluid: false,
-    plugins: {
-        record: {
-            audio: true,
-            video: {
-                width: 1280,
-                height: 720
-            },
-            frameWidth: 1280,
-            frameHeight: 720,
-            maxLength: videoMaxLengthInSeconds,
-            videoMimeType: "video/webm;codecs=H264",
-            autoMuteDevice: true
-        }
-    }
-};
+      var options = {
+          controls: true,
+          width: 800,
+          height: 450,
+          fluid: false,
+          plugins: {
+              record: {
+                  audio: true,
+                  video: {
+                      width: 1280,
+                      height: 720
+                  },
+                  frameWidth: 1280,
+                  frameHeight: 720,
+                  maxLength: videoMaxLengthInSeconds,
+                  videoMimeType: "video/webm;codecs=H264",
+                  autoMuteDevice: true
+              }
+          }
+      };
 
-var player = videojs('portfolioVideo', options, function() {
-    // print version information at startup
-    var msg = 'Using video.js ' + videojs.VERSION +
-        ' with videojs-record ' + videojs.getPluginVersion('record') +
-        ' and recordrtc ' + RecordRTC.version;
-    videojs.log(msg);
-});
+      var player = videojs('portfolioVideo', options, function() {
+          // print version information at startup
+          var msg = 'Using video.js ' + videojs.VERSION +
+              ' with videojs-record ' + videojs.getPluginVersion('record') +
+              ' and recordrtc ' + RecordRTC.version;
+          videojs.log(msg);
+      });
 
-player.on('deviceError', function() {
-    console.log('device error:', player.deviceErrorCode);
-});
+      player.on('deviceError', function() {
+          console.log('device error:', player.deviceErrorCode);
+      });
 
-player.on('error', function(element, error) {
-    console.error(error);
-});
+      player.on('error', function(element, error) {
+          console.error(error);
+      });
 
-player.on('startRecord', function() {
-    console.log('started recording!');
-});
+      player.on('startRecord', function() {
+          console.log('started recording!');
+      });
 
-player.on('finishRecord', function() {
-    console.log('finished recording!')
-    var current_date = moment().format('MM_DD_YYYY_H_mm_ss')
-    player.record().saveAs({'video': 'Portfolio_Video_Capture_'+current_date+'.webm'})
-});
-
-
-</script>
-
-</body>
+      player.on('finishRecord', function() {
+          console.log('finished recording!')
+          var current_date = moment().format('MM_DD_YYYY_H_mm_ss')
+          player.record().saveAs({'video': 'Portfolio_Video_Capture_'+current_date+'.webm'})
+      });
+    </script>
+  </body>
 </html>
