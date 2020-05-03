@@ -47,7 +47,11 @@
 }
 
 .btn-primary#download {
-    display: block;
     margin: 0 auto;
     margin-top: 1em;
+}
+
+.button-section {
+    margin: 0 auto;
+    width: 19em;
 }

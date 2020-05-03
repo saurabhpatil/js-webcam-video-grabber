@@ -21,11 +21,15 @@
       <div class="card card-video-player">
         <video id="portfolioVideo" playsinline class="video-js vjs-default-skin"></video>
       </div>
-      <button class="btn btn-primary" id="download">Download</button>
+      <div class="button-section">
+        <button class="btn btn-primary" id="download">Download</button>
+        <button class="btn btn-primary" id="end-session">End Session</button>
+      </div>
     </div>
 
     <script>
       var videoMaxLengthInSeconds = 120;
+      var deviceID = 0;
 
       var options = {
           controls: true,
@@ -58,6 +62,7 @@
 
       player.on('deviceError', function() {
           console.log('device error:', player.deviceErrorCode);
+          alert("This device does not support webcam or mic sharing.")
       });
 
       player.on('error', function(element, error) {
@@ -69,10 +74,18 @@
       });
 
       player.on('finishRecord', function() {
-          console.log('finished recording!')
-          var current_date = moment().format('MM_DD_YYYY_H_mm_ss')
-          player.record().saveAs({'video': 'Portfolio_Video_Capture_'+current_date+'.webm'})
+        console.log('finished recording!')
       });
+
+      document.getElementById('download').onclick = function() {
+        var current_date = moment().format('MM_DD_YYYY_H_mm_ss')
+        player.record().saveAs({'video': 'Portfolio_Video_Capture_'+current_date+'.webm'})
+        console.log("Successfully downloaded webcam video file!")
+      };
+
+      document.getElementById('end-session').onclick = function() {
+        player.record().reset();
+      }
     </script>
   </body>
 </html>
